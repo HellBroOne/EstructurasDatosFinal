@@ -1,0 +1,23 @@
+({ })
+package lectorArchivosTexto;
+
+import entradasalida.SalidaPorDefecto;
+/**
+*    Establecidos
+*    imports.
+*/
+public class Ejemplo {
+    public String hola;
+    public double precioDelKiloDeTortillas;
+
+    public Ejemplo(){
+        precioDelKiloDeTortillas = 19.1;
+    }
+
+    public void ejemplo(){
+        SalidaPorDefecto.terminal("Como que a "+precioDelKiloDeTortillas+" el kg de tortilla?");
+    }
+    /*
+    Un comentario
+    */
+}

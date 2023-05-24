@@ -1,0 +1,95 @@
+Examen parcial 2 - ED, Gerardo Rivas Delgado
+En este .txt se describira lo que se agrego
+como clases y clases de prueba, así como los
+archivos de documentacion y algunas pequeñas
+consideraciones.
+
+####################### CLASES ####################################
+
+1. Clase de OperacionesPolinomio ---------------------------------
+
+UBICADA EN= src/utilerias/matematicas/polinomios/OperacionesPolinomio.java
+
+DESCRIPCION= Clase que permite realizar las operaciones de los polinomios solicitadas. 
+Ingresando el polinomio como cadena con el metodo agregarExpresion y cada metodo llama a
+un metodo que es recursivo por su propia cuenta.
+
+METODOS= Tenemos 5 metodos principales, pero que mandan a llamar a otros recursivos que
+necesitan como parametro a ciertos elementos a verificar, estos son:
+  - agregarExpresion(): Agrega una nueva expresion pidiendola en cadena y el valor de X en double.
+  - dividirYAgregar(String cadena, int posicion) [PRIVADO]: Recursivamente divide a la expresion en monomios
+    y la agrega a una lista dinamica.
+  - imprimirPolinomio(): Imprime al polinomio pero invocando al metodo que los imprime recursivamente.
+  - imprimirNodo(Nodo temporal) [PRIVADO]: Metodo recursivo que obteniendo el nodo, lo imprime en forma de polinomio.
+  - obtenerMonomio(String monomio): Metodo que busca al monomio en la cadena de la expresion.
+  - identificarMonomio(Nodo actual, String monomio) [PRIVADO]: Metodo recursivo que identifica la info de un
+    monomio contenida en un nodo.
+  - aBinario(): Metodo que manda a llamar al que convierte el polinomio a binario.
+  - identificarSiEsExponente(Nodo actual, int mayorExp, String cadenaRetorno) [PRIVADO]: Metodo que verifica si un monomio esta en su posicion.
+  - identififcarMayorExponente(int posicion, int mayor, boolean esExponente, String numero)[PRIVADO]: Metodo privado que 
+    identifica al exponente mayor en la     expresion.
+  - resolverPolinomio(): Metodo que llama al que resuelve al polinomio.
+  - obtenerResultado(int posicion, double resultado, ListaDinamica exponentes, int posicionExponente) [PRIVADO]: Metodo recursivo 
+    que resuelve al polinomio. Este es mandado a llamar por "resolverPolinomio()".
+  - obtenerExponentes(int posicion, boolean esExponente, String numero, ListaDinamica retorno) [PRIVADO]: Metodo recursivo 
+    privado que obtiene los exponentes de la expresion y los devuelve en lista dinamica.
+
+2. Clase de Prueba: PruebaPolinomio --------------------------
+UBICADA EN= src/pruebas/PruebaPolinomio.java
+DESCRIPCIÓN= Esta clase es la clase que se uso para realizar pruebas respecto
+a operaciones de Polinomios y demás elementos.
+
+3. Clase Lista Dinamica Doble No lineal --------------------------
+
+UBICADA EN= src/estructurasnolineales/ListaDobleNoLinear.java 
+
+DESCRIPCION= En esta clase se tiene la Lista Dinámica Doble No Lineal, lo que pensé es que esta lista, 
+al tener apuntadores hacia arriba, abajo o derecha no tenía una estructura secuencial como la de una 
+Lista Dinámica u otras, por lo tanto está ubicada aquí. Esta clase implementa a todos los metodos que
+se han pedido
+
+METODOS= El punto de esta ED es que tiene 7 métodos, aunque se nos han pedido sólo 4 métodos principales, 
+uso otros tres métodos para poder complementar el funcionamiento:
+  - vacia(): Verifica si la lista esta completamente vacia.
+  - agregar(Object info): Agrega un objeto info a un nodo que se enlazará a esta lista.
+  - eliminar(): Elimina al último nodo, no sin antes devolver el objeto info que se suprimio.
+  - buscarAnteriorAPenultimo() [PRIVADO]: Metodo que sirve para poder encontrar el nodo anterior al ultimo. 
+    Solo usado en el de eliminar.
+  - buscar(Object info): Metodo que busca al objeto info y lo devuelve si lo encuentra, si no un nulo.
+  - imprimir(): Simplemente imprime a la lista, los valores de arriba son los pares y los de abajo los impares.
+  - imprimirDatos() [PRIVADO]: Metodo únicamente usado en pruebas, para imprimir ciertos detalles de la lista.
+
+4. Clase de Prueba: PruebaListaDobleNoLinear ---------------------
+UBICADA EN= src/pruebas/PruebaListaDobleNoLinear.java
+DESCRIPCIÓN= Esta clase es la clase que se uso para realiazr pruebas de la ED y demás elementos.
+
+############## TODA LA DOCUMENTACIÓN ESTÁ EN LAS RUTAS SIGUIENTES ##############
+
+1. Clase OperacionesPolinomio: doc/utilerias/matematicas/polinomios/OperacionesPolinomio.html
+
+2. Clase PruebaPolinomio no conlleva ningún JavaDoc en sí, ya que es un "main".
+
+3. Clase ListaDobleNoLinear: doc/estructurasnolineales/ListaDobleNoLinear.html
+
+4. Clase PruebaListaDobleNoLinear no conlleva ningún JavaDoc en sí, ya que es un "main".
+
+#################### CONSIDERACIONES DEL TRABAJO ##############################
+En el punto de hacer el desglose únicamente se mando a llamar a la funcion pero
+en el puro caso base, asi que para poder ejemplificar un poco más hice el desglo-
+se con x valiendo 13 como venía y otro con x valiendo 10.
+
+Principalmente, hubieron mayores dificultades al momento de hacer el ejercicio 2,
+ya que en cierto modo no tuve más que la idea asombrosa de hacer metodos publicos
+que manden a llamar a metodos privados que se encargan de hacer lo recursivo de
+cada metodo, debido a que note que en los parametros requeria tener mas parametros
+para que se vayan pasando a los metodos cada vez que se llaman y no perder esos
+datos.
+
+En la lista Dinamica Doble no lineal hice la mayoria del trabajo con ciclos, ya 
+estaba cansado de la recursividad y pues al ser opcional, decidi que esta lista
+se itera con whiles de nodos principalmente.
+
+NOTA: En sí todos los métodos de ambas clases funcionan, sin embargo, en la clase 
+de los polinomios parte del código recursivo es muy grande, ya que se requieren 
+hacer varias operaciones de entrada.
+

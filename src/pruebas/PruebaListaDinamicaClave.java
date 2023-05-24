@@ -1,0 +1,140 @@
+package pruebas;
+
+import entradasalida.SalidaPorDefecto;
+import estructurasLineales.ListaDinamica;
+import estructurasLineales.ListaDinamicaClave;
+import estructurasLineales.ListaEstatica;
+import estructurasnolineales.Matriz2;
+
+public class PruebaListaDinamicaClave {
+    public static void main(String[] args) {
+        ListaDinamicaClave listaClave = new ListaDinamicaClave();
+        listaClave.agregar(43, "A");
+        listaClave.agregar(42, "D");
+        listaClave.agregar(54, "E");
+        listaClave.agregar("F", "J");
+        listaClave.imprimir();
+        SalidaPorDefecto.terminal("\nBuscando el de la clave F: "+listaClave.buscar("F")+"\n");
+        SalidaPorDefecto.terminal("Buscando el de la clave 69: "+listaClave.buscar(69)+"\n");
+        SalidaPorDefecto.terminal("Buscando el de la clave 43: "+listaClave.buscar(43)+"\n");
+        SalidaPorDefecto.terminal("\nBuscando el elemento con info 'A': "+listaClave.buscarContenido("A")+"\n");
+        SalidaPorDefecto.terminal("Buscando el elemento con info 32: "+listaClave.buscarContenido(32)+"\n\nImprimir:\n");
+        listaClave.agregar("F", "PAN");
+        listaClave.agregar("G", "PAN");
+        listaClave.agregar(54, "XE");
+        listaClave.agregar(35, 345);
+        listaClave.imprimir();
+        SalidaPorDefecto.terminal("\n\nProbando si se puede cambiar: "+listaClave.cambiar(43, "Tortillas")+"\n");
+        SalidaPorDefecto.terminal("Probando si se puede cambiar un nodo inexistente: "+listaClave.cambiar(23, "Tortillas")+"\n");
+        listaClave.imprimir();
+        SalidaPorDefecto.terminal("\n\nProbando si se puede cambiar con la info de 'pan': "+listaClave.cambiarValor("Pan", "Bolillo")+"\n");
+        SalidaPorDefecto.terminal("Probando si se puede cambiar con la info de '345': "+listaClave.cambiarValor(345, 808)+"\n");
+        SalidaPorDefecto.terminal("Probando si se puede cambiar con info inexistente (0): "+listaClave.cambiarValor(0, "Pez")+"\n");
+        listaClave.imprimir();
+        SalidaPorDefecto.terminal("\n\nProbando numero de elementos: "+listaClave.numeroElementos()+"\n");
+        SalidaPorDefecto.terminal("Imprimiendo pura clave: \n");
+        listaClave.imprimirClaves();
+        SalidaPorDefecto.terminal("\n\nImprimiendo puro contenido: \n");
+        listaClave.imprimirValores();
+        SalidaPorDefecto.terminal("\n\nEliminando el de la clave 54: "+listaClave.eliminar(54)+"\n");
+        listaClave.imprimir();
+        listaClave.vaciar();
+        SalidaPorDefecto.terminal("\n\nProbando si vaciar funciona: "+listaClave.vacia()+"\n");
+        listaClave.imprimir();
+        SalidaPorDefecto.terminal("\n\nProbando numero de elementos cuando esta vacia: "+listaClave.numeroElementos()+"\n");
+        //agregamos mas nodos
+        listaClave.agregar(0, "A");
+        listaClave.agregar(2, "B");
+        listaClave.agregar(5, "C");
+        listaClave.agregar("D", "E");
+        ListaEstatica listaClaveEstatica = listaClave.aListasEstaticas();
+        SalidaPorDefecto.terminal("\nProbando el funcionamiento de a Listas Estaticas:"+listaClaveEstatica+"\n");
+        listaClaveEstatica.imprimir();
+        SalidaPorDefecto.terminal("\nEn la posicion 0 se tiene una lista estatica que contiene las claves, y en la 1 los valores:\nImprimiendo Claves:\n");
+        ListaEstatica claves = (ListaEstatica) listaClaveEstatica.obtener(0);
+        ListaEstatica valores = (ListaEstatica) listaClaveEstatica.obtener(1);
+        claves.imprimir();
+        SalidaPorDefecto.terminal("\nAhora valores:\n");
+        valores.imprimir();
+        Matriz2 listaClaveMatriz = listaClave.aMatriz2();
+        SalidaPorDefecto.terminal("\n\nAhora, convirtamosla a una matriz: "+listaClaveMatriz+"\n");
+        listaClaveMatriz.imprimirPorRenglones();
+        ListaDinamica listaClaveDyna = listaClave.aListasDinamicas();
+        SalidaPorDefecto.terminal("\n\nAhora, convirtamosla a una Lista Dinamica: "+listaClaveDyna+"\n");
+        listaClaveDyna.imprimir();
+        ListaDinamica clavesDin = (ListaDinamica) listaClaveDyna.obtener(0);
+        ListaDinamica valoresDin = (ListaDinamica) listaClaveDyna.obtener(1);
+        SalidaPorDefecto.terminal("\nImprimiendo Claves:\n");
+        clavesDin.imprimir();
+        SalidaPorDefecto.terminal("\nAhora valores:\n");
+        valoresDin.imprimir();
+
+        ListaDinamicaClave listaAgregar = new ListaDinamicaClave();
+        SalidaPorDefecto.terminal("\n\nProbando agregar una lista clave a la actual (caso que este vacia):"+listaClave.agregarLista(listaAgregar)+"\n");
+        listaClave.imprimir();
+        SalidaPorDefecto.terminal("\n\nAgregando valores...\n");
+        listaAgregar.agregar(1, "Enrique");
+        listaAgregar.agregar(2, "Martha");
+        listaAgregar.agregar(3, "Chucky");
+        SalidaPorDefecto.terminal("\nLista a agregar: \n");
+        listaAgregar.imprimir();
+        SalidaPorDefecto.terminal("\n\nProbando agregar una lista clave a la actual:"+listaClave.agregarLista(listaAgregar)+"\n");
+        listaClave.imprimir();
+
+        SalidaPorDefecto.terminal("\n\nProbando agregar una lista estatica a la actual:"+listaClave.agregarListasEstaticas(claves, valores)+"\n");
+        listaClave.imprimir();
+
+        ListaEstatica claves2 = new ListaEstatica(2);
+        ListaEstatica valores2 = new ListaEstatica(2);
+        claves2.agregar(9);
+        claves2.agregar(11);
+        valores2.agregar("E");
+        SalidaPorDefecto.terminal("\n\nProbando agregar una lista estatica a la actual\n(solo los valores hay menos): "+listaClave.agregarListasEstaticas(claves2, valores2)+"\n");
+        listaClave.imprimir();
+        ListaEstatica clavesMenor = new ListaEstatica(2);
+        ListaEstatica valoresMayor = new ListaEstatica(4);
+        SalidaPorDefecto.terminal("\n\nProbando agregar una lista estatica a la actual\n(Hay menos claves que valores): "+listaClave.agregarListasEstaticas(clavesMenor, valoresMayor)+"\n");
+        listaClave.imprimir();
+
+        clavesDin.cambiar(0, 43);
+        clavesDin.cambiar(1, 45);
+        clavesDin.cambiar(2, 48);
+        clavesDin.cambiar(3, 51);
+        valoresDin.cambiar(0, "XP");
+        valoresDin.cambiar(1, "LVL");
+        valoresDin.cambiar(2, "DEF");
+        valoresDin.cambiar(3, "ATK");
+        SalidaPorDefecto.terminal("\n\n");
+        clavesDin.imprimir();
+        SalidaPorDefecto.terminal("\n");
+        valoresDin.imprimir();
+        SalidaPorDefecto.terminal("\n\nProbando agregar una lista dinamica a la actual:"+listaClave.agregarListasDinamicas(clavesDin, valoresDin)+"\n");
+        listaClave.imprimir();
+        valoresDin.agregar("si");
+        SalidaPorDefecto.terminal("\n\nProbando agregar una lista dinamica a la actual (tamanios diferentes):"+listaClave.agregarListasDinamicas(clavesDin, valoresDin)+"\n");
+        listaClave.imprimir();
+        listaClave.agregar(423, null);
+        SalidaPorDefecto.terminal("\n");
+        listaClave.imprimir();
+        listaClaveMatriz.cambiar(0, 0, 21);
+        listaClaveMatriz.cambiar(1, 0, 22);
+        listaClaveMatriz.cambiar(2, 0, 23);
+        listaClaveMatriz.cambiar(3, 0, 20);
+        listaClaveMatriz.cambiar(0, 1, "SPEC");
+        listaClaveMatriz.cambiar(1, 1, "Get");
+        listaClaveMatriz.cambiar(2, 1, listaClaveEstatica);
+        listaClaveMatriz.cambiar(3, 1, null);
+        SalidaPorDefecto.terminal("\n\nProbando agregar una matriz a la actual:"+listaClave.agregarMatriz2(listaClaveMatriz)+"\n");
+        listaClave.imprimir();
+        Object respaldo = listaClave.eliminarContenido(null);
+        SalidaPorDefecto.terminal("\n\nProbando eliminar Contenidos (Con null): "+respaldo+"\n");
+        listaClave.imprimir();
+        SalidaPorDefecto.terminal("\n\nProbando eliminar Contenidos: "+listaClave.eliminarContenido("E")+"\n");
+        listaClave.imprimir();
+        SalidaPorDefecto.terminal("\n\nProbando eliminar Contenidos inexistentes (PERROS): "+listaClave.eliminarContenido("PERROS")+"\n");
+        listaClave.imprimir();
+
+        SalidaPorDefecto.terminal("\n\nProbando obtener clave 3: "+listaClave.obtener(3));
+
+    }
+}

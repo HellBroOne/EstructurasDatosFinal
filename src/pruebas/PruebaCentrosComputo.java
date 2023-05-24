@@ -1,0 +1,94 @@
+package pruebas;
+
+import entradasalida.SalidaPorDefecto;
+import estructurasLineales.ListaDinamica;
+import registros.centros_computo.Aplicacion;
+import registros.centros_computo.ControlCentrosComputo;
+
+public class PruebaCentrosComputo {
+    public static void main(String[] args) {
+        ControlCentrosComputo cc_control = new ControlCentrosComputo(3);
+        SalidaPorDefecto.terminal("Probemos a imprimir los centros de Computo:\n");
+        cc_control.imprimirListaCC();
+        SalidaPorDefecto.terminal("\nHemos agregado el 2, pero ya existe: "+cc_control.agregarCentroComputo(2)+"\n");
+        cc_control.imprimirListaCC();
+        SalidaPorDefecto.terminal("\nHemos agregado el 7: "+cc_control.agregarCentroComputo(7)+"\n");
+        cc_control.imprimirListaCC();
+        int resultado = cc_control.agregarComputadora(1, 2, 8.7, 524.78, "Intel", "Lenovo");
+        SalidaPorDefecto.terminal("\nAgreguemos una computadora al CC 2:"+resultado+"\nImprimimos TODAS las PCs del CC2:\n");
+        SalidaPorDefecto.terminal("\nAgreguemos otras dos computadoras al CC 2, e imprimimos: ");
+        cc_control.agregarComputadora(2, 2, 4.0, 1024, "Intel Core i3", "HP");
+        cc_control.agregarComputadora(3, 2, 6, 732, "AMD Ryzen 3", "Dell");
+        cc_control.imprimirComputadorasXCentroComputo(2);
+        SalidaPorDefecto.terminal("\nSi imprimimos TODAS las PCs de un CC inexistente (CC 4):\n");
+        cc_control.imprimirComputadorasXCentroComputo(4);
+        SalidaPorDefecto.terminal("\nSi imprimimos la PC 2 del CC 2:\n");
+        cc_control.imprimirComputadorasXNumero(2, 2);
+        SalidaPorDefecto.terminal("\nSi imprimimos una PC inexistente del CC 2:\n");
+        cc_control.imprimirComputadorasXNumero(2, 5);
+        SalidaPorDefecto.terminal("\nDemos de baja a la PC 3 del CC 2:\n"+cc_control.eliminarComputadora(2, 3)+"\nVerificamos la eliminacion:\n");
+        cc_control.imprimirComputadorasXCentroComputo(2);
+        SalidaPorDefecto.terminal("\nDemos de baja a una PC inexistente del CC 2:\n"+cc_control.eliminarComputadora(2, 8)+"\nVerificamos la eliminacion:\n");
+        cc_control.imprimirComputadorasXCentroComputo(2);
+        int resultadoApp = cc_control.agregarAplicacion(2, 2, "Chrome", "img_chorme.ico", 1.4, 2.0, "Patricio Pedro");
+        SalidaPorDefecto.terminal("\nAgreguemos una app a la pc2 del CC2:"+resultadoApp+"\n");
+        cc_control.imprimirComputadorasXNumero(2, 2);
+        int resultadoApp1 = cc_control.agregarAplicacion(2, 3, "Chrome", "img_chorme.ico", 1.4, 2.0, "Patricio Pedro");
+        SalidaPorDefecto.terminal("\nAgreguemos una app a una pc inexistente del CC2:"+resultadoApp1+"\n");
+        cc_control.imprimirComputadorasXNumero(2, 3);
+        SalidaPorDefecto.terminal("\n\nAgregando mas apps...\n\n");
+        cc_control.agregarAplicacion(2, 1, "Chrome", "img_chorme.ico", 1.4, 2.0, "Patricio Pedro");
+        cc_control.agregarAplicacion(2, 2, "WhatsApp", "icons/meta/wspp/img_whatsapp.ico", 28.9, 1.0, "Marcos Zukaritas");
+        cc_control.agregarAplicacion(2, 2, "Valorant", "VALORANT_ICON.png", 13.5, 6.0, "Riot Games");
+        cc_control.agregarComputadora(10, 1, 4.0, 1024, "Intel Core i5", "HP Pavillon");
+        cc_control.agregarAplicacion(1, 10, "Chrome", "img_chorme.ico", 1.4, 2.0, "Patricio Pedro");
+        cc_control.agregarComputadora(15, 7, 8.0, 824, "AMD Radeon", "Lenovo Desktop");
+        cc_control.agregarAplicacion(7, 15, "Chrome", "img_chorme.ico", 1.4, 2.0, "Patricio Pedro");
+        cc_control.agregarAplicacion(7, 15, "Valorant", "VALORANT_ICON.png", 13.5, 6.0, "Riot Games");
+        cc_control.imprimirComputadorasXNumero(2, 2);
+        SalidaPorDefecto.terminal("\nBorremos una app en la PC2 del CC1:"+cc_control.eliminarAplicacion(1, 2, "Valorant")+"\n");
+        SalidaPorDefecto.terminal("\nBorremos una app en la PC2 del CC2:"+cc_control.eliminarAplicacion(2, 2, "Valorant")+"\n");
+        cc_control.imprimirComputadorasXCentroComputo(2);
+        cc_control.imprimirComputadorasConAppInstalada("Chrome");
+        cc_control.imprimirComputadorasConAppInstalada("Valorant");
+
+        SalidaPorDefecto.terminal("\n\n# Verifiquemos que se puedan obtener las pcs que pueden correr una app:\n");
+        Aplicacion appTest1 = new Aplicacion("Chrome", "img_chorme.ico", 1.4, 2.0, "Patricio Pedro");
+        Aplicacion appTest2 = new Aplicacion("Valorant", "VALORANT_ICON.png", 13.5, 6.0, "Riot Games");
+        cc_control.agregarAplicacion(2, 2, "Valorant", "VALORANT_ICON.png", 13.5, 6.0, "Riot Games");
+        cc_control.imprimirCualesCorrenLaApp(appTest2);
+
+        SalidaPorDefecto.terminal("\n\n# Veamos los usuarios de la PC 2:\n");
+        cc_control.usuariosDeComputadora(2, 2);
+        SalidaPorDefecto.terminal("# Agreguemos a un usuario a la PC 2 del CC 2:\n");
+        ListaDinamica listaappsMal = new ListaDinamica();
+        listaappsMal.agregar("G");
+        listaappsMal.agregar(3);
+        cc_control.agregarUsuario(2, 2, "Juan", 30, 03, 2005, 22, 23, listaappsMal);
+        ListaDinamica listaapps = new ListaDinamica();
+        listaapps.agregar(appTest1);
+        listaapps.agregar(appTest2);
+        int resultadoApps = cc_control.agregarUsuario(2, 2, "Juan", 30, 03, 2005, 22, 23, listaappsMal);
+        SalidaPorDefecto.terminal("\nProbando a agregar a un usuario con apps invalidas: "+resultadoApps+"\n");
+        cc_control.imprimirComputadorasXNumero(2, 2);
+        int resultadoApps2 = cc_control.agregarUsuario(2, 2, "Juan", 30, 03, 2005, 22, 23, listaapps);
+        SalidaPorDefecto.terminal("\nProbando a agregar a un usuario con apps invalidas: "+resultadoApps2+"\n");
+        cc_control.imprimirComputadorasXNumero(2, 2);
+        int resultaApp3 = cc_control.agregarUsuario(2, 2, "Juan", 30, 03, 2005, 22, 23, listaapps);
+        SalidaPorDefecto.terminal("\nProbando a agregar al mismo usuario: "+resultaApp3+"\n");
+        cc_control.imprimirComputadorasXNumero(2, 2);
+        SalidaPorDefecto.terminal("\nAgregando mas usuarios...\n");
+        cc_control.agregarUsuario(2, 2, "Pedro", 28, 03, 2005, 22, 23, listaapps);
+        cc_control.agregarUsuario(2, 2, "Enrique", 29, 03, 2005, 22, 23, listaapps);
+        cc_control.agregarUsuario(7, 15, "Juan", 30, 03, 2005, 22, 23, listaapps);
+        cc_control.agregarUsuario(7, 15, "Juan", 30, 05, 2007, 22, 23, listaapps);
+        cc_control.imprimirComputadorasXNumero(2, 2);
+        SalidaPorDefecto.terminal("\n\n");
+        cc_control.imprimirDiasUso("Juan");
+        SalidaPorDefecto.terminal("\n\n");
+        cc_control.imprimirAplicacionesDeUsuarioPorfecha("30/3/2005", "Juan");
+        SalidaPorDefecto.terminal("\n\n");
+        cc_control.imprimirUsuariosQueNoUsanelCC(7);
+        cc_control.imprimirUsuariosQueNoUsanelCC(2);
+    }
+}
