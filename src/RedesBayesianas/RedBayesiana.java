@@ -49,37 +49,54 @@ public class RedBayesiana {
         ListaDinamica padres = obtenerPadres(variable);
         int indicePadre = 0;
         String cadena = "";
-        for (int cadaRenglon = 0; cadaRenglon<actual.obtenerRenglones(); cadaRenglon++){
-            for (int cadaColumna = 0; cadaColumna<actual.obtenerColumnas(); cadaColumna++){
-                SalidaPorDefecto.terminal("Ingrese la probabilidad de ");
-                if (cadaRenglon%2 == 0){
-                    SalidaPorDefecto.terminal("que SI "+variable);
-                } else {
-                    SalidaPorDefecto.terminal("que NO "+variable);
-                }
-                padres.inicializarIterador();
-                if (actual.obtenerColumnas() > 1){
-                    if (cadaColumna < (actual.obtenerColumnas()/2)){
-                        cadena = " Si ";
+
+        if (padres != null) {
+            for (int cadaRenglon = 0; cadaRenglon < actual.obtenerRenglones(); cadaRenglon++) {
+                for (int cadaColumna = 0; cadaColumna < actual.obtenerColumnas(); cadaColumna++) {
+                    SalidaPorDefecto.terminal("Ingrese la probabilidad de ");
+                    if (cadaRenglon % 2 == 0) {
+                        SalidaPorDefecto.terminal("que SI " + variable);
                     } else {
-                        cadena = " No ";
+                        SalidaPorDefecto.terminal("que NO " + variable);
                     }
-                    if ( cadaColumna%2 == 0){
-                        SalidaPorDefecto.terminal(cadena + padres.obtenerNodo());
-                    } else {
-                        SalidaPorDefecto.terminal(cadena + padres.obtenerNodo());
-                    }
-                    while (padres.hayNodo()){
-                        if ( cadaColumna%2 == 0) {
-                            SalidaPorDefecto.terminal(" Si " + padres.obtenerNodo() );
+                    padres.inicializarIterador();
+                    if (actual.obtenerColumnas() > 1) {
+                        if (cadaColumna < (actual.obtenerColumnas() / 2)) {
+                            cadena = " Si ";
                         } else {
-                            SalidaPorDefecto.terminal(" No " + padres.obtenerNodo());
+                            cadena = " No ";
+                        }
+                        if (cadaColumna % 2 == 0) {
+                            SalidaPorDefecto.terminal(cadena + padres.obtenerNodo());
+                        } else {
+                            SalidaPorDefecto.terminal(cadena + padres.obtenerNodo());
+                        }
+                        while (padres.hayNodo()) {
+                            if (cadaColumna % 2 == 0) {
+                                SalidaPorDefecto.terminal(" Si " + padres.obtenerNodo());
+                            } else {
+                                SalidaPorDefecto.terminal(" No " + padres.obtenerNodo());
+                            }
                         }
                     }
+                    SalidaPorDefecto.terminal(": ");
+                    double probabilidad = EntradaPorDefecto.consolaDouble();
+                    actual.cambiar(cadaRenglon, cadaColumna, probabilidad);
                 }
-                SalidaPorDefecto.terminal(": ");
-                double probabilidad = EntradaPorDefecto.consolaDouble();
-                actual.cambiar(cadaRenglon, cadaColumna, probabilidad);
+            }
+        } else {
+            for (int cadaRenglon = 0; cadaRenglon < actual.obtenerRenglones(); cadaRenglon++) {
+                for (int cadaColumna = 0; cadaColumna < actual.obtenerColumnas(); cadaColumna++) {
+                    SalidaPorDefecto.terminal("Ingrese la probabilidad de ");
+                    if (cadaRenglon % 2 == 0) {
+                        SalidaPorDefecto.terminal("que SI " + variable);
+                    } else {
+                        SalidaPorDefecto.terminal("que NO " + variable);
+                    }
+                    SalidaPorDefecto.terminal(": ");
+                    double probabilidad = EntradaPorDefecto.consolaDouble();
+                    actual.cambiar(cadaRenglon, cadaColumna, probabilidad);
+                }
             }
         }
         SalidaPorDefecto.terminal("\n");
