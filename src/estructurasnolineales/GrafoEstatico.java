@@ -736,4 +736,8 @@ public class GrafoEstatico {
             return null;
         }
     }
+
+    public Object obtenerVertice(int indice){
+        return vertices.obtener(indice);
+    }
 }

@@ -3,6 +3,7 @@ package RedesBayesianas;
 import entradasalida.EntradaPorDefecto;
 import entradasalida.SalidaPorDefecto;
 import estructurasLineales.ListaDinamica;
+import estructurasLineales.ListaEstatica;
 import estructurasnolineales.GrafoEstatico;
 import estructurasnolineales.Matriz2;
 
@@ -63,7 +64,63 @@ public class RedBayesiana {
     }
 
     public ListaDinamica obtenerPadres(Object variable){
-        return null;
+        int indice = red.buscarIndice(variable);
+        Matriz2 relaciones = red.obtenerAristas();
+        ListaDinamica retorno = new ListaDinamica();
+        for (int cadaPadre = 0; cadaPadre<relaciones.obtenerRenglones(); cadaPadre++){
+            double obtenido = (double) relaciones.obtener(cadaPadre, indice);
+            if (obtenido > 0.0){
+                Object verticeObtenido = red.obtenerVertice(cadaPadre);
+                retorno.agregar(verticeObtenido);
+            }
+        }
+        if (retorno.vacia() == false){
+            return retorno;
+        }else{
+            return null;
+        }
+    }
+
+
+    //3. preguntar del padre, y varificar si si o no
+    //4. ir a dicha posicion
+    public double calcularProbabilidad(Object variable){
+        //1. tomar el vertice al que nos dirigimos
+        Matriz2 probabilidadActual = buscarProbabilidad(variable);
+        if (probabilidadActual != null){
+            //2. preguntar si o no? sobre el vertice
+            int renglon = 0;
+            SalidaPorDefecto.terminal(""+variable+" ocurre? [S/N]: ");
+            String respuestaRenglon = EntradaPorDefecto.consolaCadenas();
+            if (respuestaRenglon.equalsIgnoreCase("s") == true){
+                //renglon 0
+                renglon = 0;
+            } else {
+                //renglon 1
+                renglon = 1;
+            }
+            ListaDinamica papis = obtenerPadres(variable);
+            int posicion = probabilidadActual.obtenerColumnas();
+            if (papis != null){
+                while (papis.vacia() == false){
+                    SalidaPorDefecto.terminal(""+papis.eliminarInicio()+" ocurre?[S/N]: ");
+                    String respuestaDos = EntradaPorDefecto.consolaCadenas();
+                    if (respuestaDos.equalsIgnoreCase("s") == true){
+                        //mochar de la mitad pa aca
+                        posicion = posicion/2;
+                    } else {
+                        //mochar de la mitad para alla
+                        posicion = (posicion/2)+2;
+                    }
+                }
+            } else {
+                posicion = probabilidadActual.obtenerColumnas()-1;
+            }
+            double obtenido = (double) probabilidadActual.obtener(renglon, posicion-1);
+            return obtenido;
+        } else {
+            return -1.0;
+        }
     }
 
     /**
