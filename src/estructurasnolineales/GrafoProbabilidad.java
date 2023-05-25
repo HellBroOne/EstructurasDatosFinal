@@ -2,48 +2,42 @@ package estructurasnolineales;
 
 import entradasalida.SalidaPorDefecto;
 import estructurasLineales.*;
-import estructurasnolineales.auxiliares.Vertice;
+import estructurasnolineales.auxiliares.VerticeProbabilidad;
 import registros.comunes.EtiquetaGrafo;
 import utilerias.comunes.TipoOrden;
 
 /**
- * Clase que implementa un TDA de Grafo Estatico
+ * Clase que implementa un TDA de Grafo de Probabilidad.
  * @author Gerardo Rivas Delgado
- * @version 1.0
+ * @author Andres Contraras Sanchez
+ * @version 1.1
  */
-public class GrafoEstatico {
-    protected Matriz2 aristas;
-    protected ListaEstatica vertices;
+public class GrafoProbabilidad extends GrafoEstatico{
 
-    protected TipoOrden tipoOrden;
-
-    public GrafoEstatico(int numeroVertices){
-        aristas = new Matriz2(numeroVertices, numeroVertices);
-        vertices = new ListaEstatica(numeroVertices);
+    public GrafoProbabilidad(int numeroVertices){
+        super(numeroVertices);
     }
 
-    public GrafoEstatico(int numeroVertices, Object inicializador){
-        aristas = new Matriz2(numeroVertices, numeroVertices, inicializador);
-        vertices = new ListaEstatica(numeroVertices);
+    public GrafoProbabilidad(int numeroVertices, Object inicializador){
+        super(numeroVertices, inicializador);
     }
 
-    public GrafoEstatico(int numeroVertices, TipoOrden orden){
-        this(numeroVertices);
-        this.tipoOrden = orden;
-        if (tipoOrden == TipoOrden.DEC){
-            aristas.rellenar(Double.MAX_VALUE);
-        } else {
-            aristas.rellenar(Double.MIN_VALUE);
-        }
-        aristas.matrizDiagonal(0.0);
+    public GrafoProbabilidad(int numeroVertices, TipoOrden orden){
+        super(numeroVertices, orden);
     }
 
+    /**
+     * Metodo del grafo de probabilidad que permite agregar un vertice de probabilidad
+     * @param info Info a agregar al nodo
+     * @return Regresa true si se agrego.
+     */
+    @Override
     public boolean agregarVertice(Object info){
         int indiceVertice = (int) vertices.buscar(info);
         if (indiceVertice != -1){
             return false;
         } else {
-            Vertice nuevoVertice = new Vertice();
+            VerticeProbabilidad nuevoVertice = new VerticeProbabilidad();
             nuevoVertice.setInfo(info);
             nuevoVertice.setIndice(vertices.cantidad());
             int resultado = vertices.agregar(nuevoVertice);
@@ -91,7 +85,7 @@ public class GrafoEstatico {
         //2. Mientras haya elementos en la pila, sacar uno
         while (pila.vacio() != true) {
             int indiceVerticeActual = (int) pila.quitar();
-            Vertice verticeActual = (Vertice) vertices.obtener(indiceVerticeActual);
+            VerticeProbabilidad verticeActual = (VerticeProbabilidad) vertices.obtener(indiceVerticeActual);
             recorridoSalida.agregar(verticeActual.getInfo());
             //3. Los vertices adyacentes al vertice sacado, mientras no esten marcados,
             // ponerlos en la pila y marcarlos
@@ -125,7 +119,7 @@ public class GrafoEstatico {
         //2. Mientras haya elementos en la pila, sacar uno
         while (cola.vacio() != true) {
             int indiceVerticeActual = (int) cola.quitar();
-            Vertice verticeActual = (Vertice) vertices.obtener(indiceVerticeActual);
+            VerticeProbabilidad verticeActual = (VerticeProbabilidad) vertices.obtener(indiceVerticeActual);
             recorridoSalida.agregar(verticeActual.getInfo());
             //3. Los vertices adyacentes al vertice sacado, mientras no esten marcados,
             // ponerlos en la pila y marcarlos
@@ -160,7 +154,7 @@ public class GrafoEstatico {
         while (cola.vacio() != true) {
             //Paso 3. Mientras se tengan elementos en la cola, sacar uno y procesarlo.
             int indiceVerticeActual = (int) cola.quitar();
-            Vertice verticeActual = (Vertice) vertices.obtener(indiceVerticeActual);
+            VerticeProbabilidad verticeActual = (VerticeProbabilidad) vertices.obtener(indiceVerticeActual);
             recorridoOT.agregar(verticeActual.getInfo());
             //Paso 4. Recalcular las incidencias con base del paso 3.
             recalcularIncidencias(incidencias, indiceVerticeActual, marcados);
@@ -328,7 +322,7 @@ public class GrafoEstatico {
             int indiceActual = indiceDestino;
 
             do { //recorrer del destino al origen
-                Vertice verticeActual = (Vertice) vertices.obtener(indiceActual);
+                VerticeProbabilidad verticeActual = (VerticeProbabilidad) vertices.obtener(indiceActual);
                 ruta.agregarInicio(verticeActual.getInfo());
                 EtiquetaGrafo etiquetaVerticeActual = (EtiquetaGrafo) etiquetasOptimas.obtener(indiceActual);
                 indiceActual = etiquetaVerticeActual.getVerticeAnterior();
@@ -434,7 +428,7 @@ public class GrafoEstatico {
     public Object buscarVertice(Object vertice){
         int indice = (int) vertices.buscar(vertice);
         if (indice != -1){
-            Vertice respaldo = (Vertice) vertices.obtener(indice);
+            VerticeProbabilidad respaldo = (VerticeProbabilidad) vertices.obtener(indice);
             return respaldo.getInfo();
         }else{
             return null;
@@ -558,8 +552,8 @@ public class GrafoEstatico {
         boolean esConexo = false;
         for (int cadaDestino = 0; cadaDestino<aristas.obtenerRenglones(); cadaDestino++){
             for (int cadaOrigen = 0; cadaOrigen<aristas.obtenerColumnas(); cadaOrigen++){
-                Vertice origen = (Vertice) vertices.obtener(cadaDestino);
-                Vertice destino = (Vertice) vertices.obtener(cadaOrigen);
+                VerticeProbabilidad origen = (VerticeProbabilidad) vertices.obtener(cadaDestino);
+                VerticeProbabilidad destino = (VerticeProbabilidad) vertices.obtener(cadaOrigen);
                 boolean resultado = hayRuta(origen.getInfo(), destino.getInfo());
                 if (resultado == true){
                     esConexo = true;
@@ -710,5 +704,39 @@ public class GrafoEstatico {
     public int buscarIndice(Object info){
         return (int) vertices.buscar(info);
     }
-}
 
+    public boolean setProbabilidad(Matriz2Numerica probabilidades, Object variable){
+        int posicion = (int) vertices.buscar(variable);
+        if (posicion == -1){
+            return false;
+        } else {
+            VerticeProbabilidad obtenido = (VerticeProbabilidad) vertices.obtener(posicion);
+            obtenido.setProbabilidad(probabilidades);
+            return true;
+        }
+    }
+
+    /**
+     * Metodo que obtiene la matriz de la vertice a buscar.
+     * @param vertice VerticeProbabilidad buscada.
+     * @return Regresa la matriz buscada o null si no.
+     */
+    public Matriz2Numerica obtenerMatrizVertice(Object vertice){
+        int indice = (int) vertices.buscar(vertice);
+        if (indice != -1){
+            VerticeProbabilidad respaldo = (VerticeProbabilidad) vertices.obtener(indice);
+            return respaldo.getProbabilidad();
+        }else{
+            return null;
+        }
+    }
+
+    /**
+     * Metodo que permite obtener un vertice entero
+     * @param indice
+     * @return
+     */
+    public Object obtenerVertice(int indice){
+        return vertices.obtener(indice);
+    }
+}

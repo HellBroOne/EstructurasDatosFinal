@@ -3,15 +3,21 @@ package RedesBayesianas;
 import entradasalida.EntradaPorDefecto;
 import entradasalida.SalidaPorDefecto;
 import estructurasLineales.ListaDinamica;
-import estructurasLineales.ListaEstatica;
-import estructurasnolineales.GrafoEstatico;
+import estructurasnolineales.GrafoProbabilidad;
 import estructurasnolineales.Matriz2;
+import estructurasnolineales.Matriz2Numerica;
 
+/**
+ * Clase que indica a una Red Bayesiana.
+ * @author Gerardo Rivas Delgado
+ * @author Andres Contreras Sanchez
+ * @version 1.0
+ */
 public class RedBayesiana {
-    protected GrafoEstatico red;
+    protected GrafoProbabilidad red;
 
     public RedBayesiana(int numeroNodos){
-        this.red = new GrafoEstatico(numeroNodos, 0.0);
+        this.red = new GrafoProbabilidad(numeroNodos, 0.0);
     }
 
     /**
@@ -25,8 +31,8 @@ public class RedBayesiana {
 
     /**
      * Metodo que agrega una relacion a dos nodos.
-     * @param origen Vertice de origen.
-     * @param destino Vertice de destino
+     * @param origen VerticeProbabilidad de origen.
+     * @param destino VerticeProbabilidad de destino
      * @return Regresa true si la relacion fue agregada.
      */
     public boolean agregarArista(Object origen, Object destino){
@@ -36,10 +42,10 @@ public class RedBayesiana {
     /**
      * Metodo que permite agregar las probabilidades a cada variable.
      * @param variable Variable a agregar las probabilidades.
-     * @return Regresa
+     * @return Regresa un numero de probabilidad buscado.
      */
     public boolean agregarProbabilidades(Object variable){
-        Matriz2 actual = obtenerMatrizProbabilidad(variable);
+        Matriz2Numerica actual = obtenerMatrizProbabilidad(variable);
         ListaDinamica padres = obtenerPadres(variable);
         int indicePadre = 0;
         String cadena = "";
@@ -80,7 +86,12 @@ public class RedBayesiana {
         return red.setProbabilidad(actual, variable);
     }
 
-    public ListaDinamica obtenerPadres(Object variable){
+    /**
+     * Metodo que permite obtener a los padres de un nodo.
+     * @param variable Variable a buscar.
+     * @return Regresa una Lista Dinamica de los padres.
+     */
+    private ListaDinamica obtenerPadres(Object variable){
         int indice = red.buscarIndice(variable);
         Matriz2 relaciones = red.obtenerAristas();
         ListaDinamica retorno = new ListaDinamica();
@@ -99,8 +110,11 @@ public class RedBayesiana {
     }
 
 
-    //3. preguntar del padre, y varificar si si o no
-    //4. ir a dicha posicion
+    /**
+     * Metodo que permite buscar una probabilidad dada.
+     * @param variable Variable a buscar.
+     * @return Regresa el numero buscado.
+     */
     public double calcularProbabilidad(Object variable){
         //1. tomar el vertice al que nos dirigimos
         Matriz2 probabilidadActual = buscarProbabilidad(variable);
@@ -140,8 +154,8 @@ public class RedBayesiana {
      * @param variable Variable a Buscar.
      * @return Regresa la matriz buscada.
      */
-    public Matriz2 buscarProbabilidad(Object variable){
-        Matriz2 matrizObtenida = red.obtenerMatrizVertice(variable);
+    public Matriz2Numerica buscarProbabilidad(Object variable){
+        Matriz2Numerica matrizObtenida = red.obtenerMatrizVertice(variable);
         return matrizObtenida;
     }
 
@@ -150,10 +164,10 @@ public class RedBayesiana {
      * @param variable Variable a verificar
      * @return Matriz del padre
      */
-    public Matriz2 obtenerMatrizProbabilidad(Object variable){
+    public Matriz2Numerica obtenerMatrizProbabilidad(Object variable){
         int padres = contarPadres(variable);
         int columnas = (int) Math.pow(2, padres);
-        Matriz2 retorno = new Matriz2(2, columnas, 0.0);
+        Matriz2Numerica retorno = new Matriz2Numerica(2, columnas, 0.0);
         return retorno;
     }
 
@@ -177,5 +191,26 @@ public class RedBayesiana {
 
     public void imprimir(){
         red.imprimir();
+    }
+
+
+    public Double calcularProbabilidadConjunta(){
+        SalidaPorDefecto.terminal("Cuantas variables quieres multiplicar? ");
+        Integer entrada = EntradaPorDefecto.consolaInteger();
+        if (entrada != null){
+            ListaDinamica matrices = new ListaDinamica();
+            for (int cadaVariable = 0; cadaVariable<entrada; cadaVariable++){
+                SalidaPorDefecto.terminal("Ingrese la variable "+(cadaVariable+1)+": ");
+                String variable = EntradaPorDefecto.consolaCadenas();
+                //repruebo -> buscarProbabilidad(repruebo) -> MATRIZ2NUMERICA
+                Matriz2Numerica obtenida = buscarProbabilidad(variable);
+                matrices.agregar(obtenida);
+                //P(R, NT) = P(R|NT)
+                obtenida.multiplicar(obtenida);
+            }
+            return 0.0;
+        }else{
+            return null;
+        }
     }
 }

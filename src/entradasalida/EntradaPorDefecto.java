@@ -29,4 +29,18 @@ public class EntradaPorDefecto {
             return entrada;
         }
     }
+
+    public static Integer consolaInteger(){
+        InputStreamReader isr = new InputStreamReader(System.in);
+        BufferedReader buffer = new BufferedReader(isr);
+        int entrada=0;
+
+        try{
+            entrada= Integer.parseInt(buffer.readLine());
+        }catch(IOException e){
+            e.printStackTrace();
+        }finally{
+            return entrada;
+        }
+    }
 }

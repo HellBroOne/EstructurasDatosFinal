@@ -2,7 +2,7 @@ package estructurasnolineales;
 
 import entradasalida.SalidaPorDefecto;
 import estructurasLineales.*;
-import estructurasnolineales.auxiliares.Vertice;
+import estructurasnolineales.auxiliares.VerticeProbabilidad;
 
 /**
  * Clase que implementa un TDA Grafo Dinamico
@@ -18,7 +18,7 @@ public class GrafoDinamico {
         listaAdyacencia.inicializarIterador();
         while (listaAdyacencia.hayNodo() != false){
             ListaDinamica sublista = (ListaDinamica) listaAdyacencia.obtenerNodo();
-            Vertice primerVertice = (Vertice) sublista.verPrimero();
+            VerticeProbabilidad primerVertice = (VerticeProbabilidad) sublista.verPrimero();
             if (primerVertice!=null && primerVertice.toString().equalsIgnoreCase(verticeBuscado.toString()) == true){
                 return sublista;
             }
@@ -31,7 +31,7 @@ public class GrafoDinamico {
         if (sublista != null){ //ya existe
             return false;
         } else { //no existe
-            Vertice verticeNuevo = new Vertice();
+            VerticeProbabilidad verticeNuevo = new VerticeProbabilidad();
             verticeNuevo.setInfo(info);
             ListaDinamica sublistaNueva = new ListaDinamica();
             int retornoSublista = sublistaNueva.agregar(verticeNuevo);
@@ -55,8 +55,8 @@ public class GrafoDinamico {
         ListaDinamica sublistaOrigen = buscarVerticeSublista(origen);
         ListaDinamica sublistaDestino = buscarVerticeSublista(destino);
         if (sublistaOrigen != null && sublistaDestino != null){
-            Vertice nuevaArista = new Vertice();
-            Vertice verticeDestino = (Vertice) sublistaDestino.verPrimero();
+            VerticeProbabilidad nuevaArista = new VerticeProbabilidad();
+            VerticeProbabilidad verticeDestino = (VerticeProbabilidad) sublistaDestino.verPrimero();
             nuevaArista.setInfo(verticeDestino.getInfo());
             nuevaArista.setIndice(peso);
             int retorno = sublistaOrigen.agregar(nuevaArista);
@@ -88,12 +88,12 @@ public class GrafoDinamico {
         if (subListaOrigen==null){
             return null;
         }
-        Vertice vetriceOrigen = (Vertice) subListaOrigen.verPrimero();
+        VerticeProbabilidad vetriceOrigen = (VerticeProbabilidad) subListaOrigen.verPrimero();
         pila.poner(vetriceOrigen);
         marcados.agregar(vetriceOrigen);
         //2. Mientras haya elementos en la pila, sacar uno
         while (pila.vacio() != true) {
-            Vertice verticeActual = (Vertice) pila.quitar();
+            VerticeProbabilidad verticeActual = (VerticeProbabilidad) pila.quitar();
             recorridoSalida.agregar(verticeActual.getInfo());
             //3. Los vertices adyacentes al vertice sacado, mientras no esten marcados,
             // ponerlos en la pila y marcarlos
@@ -109,7 +109,7 @@ public class GrafoDinamico {
         subListaOrigen.inicializarIterador();
         subListaOrigen.obtenerNodo(); //deshacerse del primero
         while (subListaOrigen.hayNodo() == true){
-            Vertice verticeDestino = (Vertice) subListaOrigen.obtenerNodo();
+            VerticeProbabilidad verticeDestino = (VerticeProbabilidad) subListaOrigen.obtenerNodo();
             if (marcados.buscar(verticeDestino) == null){
                 pila.poner(verticeDestino);
                 marcados.agregar(verticeDestino);
@@ -153,7 +153,7 @@ public class GrafoDinamico {
             //1.2 Agregar arista (u, v) a L
             aristas.agregar(aristaMenor);
             //1.3 Agregar el nodo v a U
-            Vertice verticeV = (Vertice) aristaMenor.obtener(1);
+            VerticeProbabilidad verticeV = (VerticeProbabilidad) aristaMenor.obtener(1);
             ListaDinamica listaVertice = buscarVerticeSublista(verticeV);
             marcados.agregar(listaVertice);
         }
@@ -170,7 +170,7 @@ public class GrafoDinamico {
         listaAdyacencia.inicializarIterador();
         while (listaAdyacencia.hayNodo() != false){
             ListaDinamica sublista = (ListaDinamica) listaAdyacencia.obtenerNodo();
-            Vertice verticeActual = (Vertice) sublista.verPrimero();
+            VerticeProbabilidad verticeActual = (VerticeProbabilidad) sublista.verPrimero();
             listaVertices.agregar(verticeActual);
         }
     }
@@ -185,18 +185,18 @@ public class GrafoDinamico {
         // La idea es obtener cada vertice del conjuntoU y ver a cual arista se relaciona mejor del conjunto V.
         conjuntoU.inicializarIterador();
         int menor = Integer.MAX_VALUE;
-        Vertice menorOrigen = null;
-        Vertice menorDestino = null;
+        VerticeProbabilidad menorOrigen = null;
+        VerticeProbabilidad menorDestino = null;
 
-        Vertice actualOrigen = null;
-        Vertice actualDestino = null;
+        VerticeProbabilidad actualOrigen = null;
+        VerticeProbabilidad actualDestino = null;
         while (conjuntoU.hayNodo() != false){
             ListaDinamica sublista = (ListaDinamica) conjuntoU.obtenerNodo();
-            actualOrigen = (Vertice) sublista.verPrimero();
+            actualOrigen = (VerticeProbabilidad) sublista.verPrimero();
             sublista.inicializarIterador();
             sublista.obtenerNodo(); //evitamos el primer nodo
             while (sublista.hayNodo() != false){
-                actualDestino = (Vertice) sublista.obtenerNodo();
+                actualDestino = (VerticeProbabilidad) sublista.obtenerNodo();
                 if (verificarSiYaestaMarcado(conjuntoU, actualDestino)){
                     if (actualDestino.getIndice() < menor){
                         menor = actualDestino.getIndice();
@@ -231,10 +231,10 @@ public class GrafoDinamico {
     /**
      * Metodo que verifica si un vertice ya ha sido marcado. (Evita bucles)
      * @param marcados Vertices ya marcados o ya visitados.
-     * @param destino Vertice de destino a verificar.
+     * @param destino VerticeProbabilidad de destino a verificar.
      * @return Regresa true si ya ha sido visitado, false si no.
      */
-    private boolean verificarSiYaestaMarcado(ListaDinamica marcados, Vertice destino){
+    private boolean verificarSiYaestaMarcado(ListaDinamica marcados, VerticeProbabilidad destino){
         ListaDinamica obtenidaDestino = buscarVerticeSublista(destino);
         if (marcados.buscar(obtenidaDestino) == null){
             return true;
