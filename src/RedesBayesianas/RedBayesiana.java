@@ -207,7 +207,11 @@ public class RedBayesiana {
             SalidaPorDefecto.terminal("Ingresa la variable "+(cadaVariable+1)+": ");
             String variable = EntradaPorDefecto.consolaCadenas();
             if (variable.equals(" ") == false){
-                resultado = calcularProbabilidad(variable);
+                if (resultado == 0.0) {
+                    resultado = calcularProbabilidad(variable);
+                } else {
+                    resultado = resultado * calcularProbabilidad(variable);
+                }
             }
         }
         return resultado;

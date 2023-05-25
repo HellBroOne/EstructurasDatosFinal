@@ -17,6 +17,7 @@ public class GrafoEstatico {
 
     protected TipoOrden tipoOrden;
 
+
     public GrafoEstatico(int numeroVertices){
         aristas = new Matriz2(numeroVertices, numeroVertices);
         vertices = new ListaEstatica(numeroVertices);
