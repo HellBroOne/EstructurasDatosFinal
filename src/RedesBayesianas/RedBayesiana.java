@@ -194,23 +194,22 @@ public class RedBayesiana {
     }
 
 
+    /*
+    1.Pedir variable(s) y obtener el valor especifico que el usuario quiera
+    2.De los valores especificos obtenidos, multiplicar ambas probabiliades.
+    3.Regresar el valor en cuestion.
+     */
     public Double calcularProbabilidadConjunta(){
         SalidaPorDefecto.terminal("Cuantas variables quieres multiplicar? ");
-        Integer entrada = EntradaPorDefecto.consolaInteger();
-        if (entrada != null){
-            ListaDinamica matrices = new ListaDinamica();
-            for (int cadaVariable = 0; cadaVariable<entrada; cadaVariable++){
-                SalidaPorDefecto.terminal("Ingrese la variable "+(cadaVariable+1)+": ");
-                String variable = EntradaPorDefecto.consolaCadenas();
-                //repruebo -> buscarProbabilidad(repruebo) -> MATRIZ2NUMERICA
-                Matriz2Numerica obtenida = buscarProbabilidad(variable);
-                matrices.agregar(obtenida);
-                //P(R, NT) = P(R|NT)
-                obtenida.multiplicar(obtenida);
+        Integer cantidadVeces = EntradaPorDefecto.consolaInteger();
+        double resultado = 0.0;
+        for (int cadaVariable = 0; cadaVariable<cantidadVeces; cadaVariable++){
+            SalidaPorDefecto.terminal("Ingresa la variable "+(cadaVariable+1)+": ");
+            String variable = EntradaPorDefecto.consolaCadenas();
+            if (variable.equals(" ") == false){
+                resultado = calcularProbabilidad(variable);
             }
-            return 0.0;
-        }else{
-            return null;
         }
+        return resultado;
     }
 }
