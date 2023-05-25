@@ -27,8 +27,8 @@ public class PruebaRedBayesiana {
         SalidaPorDefecto.terminal("Vamos a ponerle probabilidades a Nublado:\n");
         //red.agregarProbabilidades("Nublado");
         SalidaPorDefecto.terminal("Vamos a ponerle probabilidades a Llueve:\n");
-        red.agregarProbabilidades("Llueve");
+        red.agregarProbabilidades("Repruebo");
         SalidaPorDefecto.terminal("\n");
-        SalidaPorDefecto.terminal("Obtenido: "+red.calcularProbabilidad("Llueve"));
+        SalidaPorDefecto.terminal("Obtenido: "+red.calcularProbabilidad("Repruebo"));
     }
 }
