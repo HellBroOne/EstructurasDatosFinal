@@ -145,7 +145,7 @@ public class Matriz2 {
                 matrizNueva.cambiar(cadaRenglon, cadaColumna, obtener(cadaRenglon, cadaColumna));
             }
         }
-        SalidaPorDefecto.terminal("Matriz Clonada.\n");
+        //SalidaPorDefecto.terminal("Matriz Clonada.\n");
         return matrizNueva;
     }
 

@@ -691,4 +691,49 @@ public class GrafoEstatico {
         ListaEstatica retorno = (ListaEstatica) vertices.clonar();
         return retorno;
     }
+
+    /**
+     * Regresa una copia de la matriz de aristas.
+     * @return Regresa una matriz con las aristas.
+     */
+    public Matriz2 obtenerAristas(){
+        Matriz2 retorno = aristas.clonar();
+        return retorno;
+    }
+
+
+    /**
+     * Busca simplemente el indice de una info.
+     * @param info Info a buscar.
+     * @return Regresa el indice buscado.
+     */
+    public int buscarIndice(Object info){
+        return (int) vertices.buscar(info);
+    }
+
+    public boolean setProbabilidad(Matriz2 probabilidades, Object variable){
+        int posicion = (int) vertices.buscar(variable);
+        if (posicion == -1){
+            return false;
+        } else {
+            Vertice obtenido = (Vertice) vertices.obtener(posicion);
+            obtenido.setProbabilidad(probabilidades);
+            return true;
+        }
+    }
+
+    /**
+     * Metodo que obtiene la matriz de la vertice a buscar.
+     * @param vertice Vertice buscada.
+     * @return Regresa la matriz buscada o null si no.
+     */
+    public Matriz2 obtenerMatrizVertice(Object vertice){
+        int indice = (int) vertices.buscar(vertice);
+        if (indice != -1){
+            Vertice respaldo = (Vertice) vertices.obtener(indice);
+            return respaldo.getProbabilidad();
+        }else{
+            return null;
+        }
+    }
 }
