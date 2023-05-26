@@ -206,6 +206,9 @@ public class RedBayesiana {
         return padres;
     }
 
+    /**
+     * Este metodo imprime la tabla de probabilidades para realizar pruebas.
+     */
     public void imprimir(){
         red.imprimir();
     }
@@ -215,6 +218,12 @@ public class RedBayesiana {
     1.Pedir variable(s) y obtener el valor especifico que el usuario quiera
     2.De los valores especificos obtenidos, multiplicar ambas probabiliades.
     3.Regresar el valor en cuestion.
+     */
+
+    /**
+     * Este metodo calcula la probabilidad conjunta dada la cantidad de variables
+     * seleccionada por el usuario, y las variables seleccionadas por el mismo.
+     * @return regresa la probabilidad calculada.
      */
     public Double calcularProbabilidadConjunta(){
         SalidaPorDefecto.terminal("Cuantas variables quieres multiplicar? ");

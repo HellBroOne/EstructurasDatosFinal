@@ -31,8 +31,10 @@ public class PruebaRedBayesiana {
 
         /*SalidaPorDefecto.terminal("Vamos a ponerle probabilidades a Llueve:\n");
         red.agregarProbabilidades("Llueve");
+
         SalidaPorDefecto.terminal("Vamos a ponerle probabilidades a No hago la tarea:\n");
         red.agregarProbabilidades("No hago la tarea");
+
         SalidaPorDefecto.terminal("Vamos a ponerle probabilidades a se va la luz:\n");
         red.agregarProbabilidades("se va la luz");*/
 
@@ -40,7 +42,7 @@ public class PruebaRedBayesiana {
         red.agregarProbabilidades("repruebo");
 
         SalidaPorDefecto.terminal("\n");
-        //SalidaPorDefecto.terminal("Obtenido: "+red.calcularProbabilidad("Se va la Luz"));
+        SalidaPorDefecto.terminal("Obtenido: "+red.calcularProbabilidad("Se va la Luz"));
 
         SalidaPorDefecto.terminal("\nProbabilidad conjunta:"  + red.calcularProbabilidadConjunta());
     }

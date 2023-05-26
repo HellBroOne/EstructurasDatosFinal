@@ -705,6 +705,12 @@ public class GrafoProbabilidad extends GrafoEstatico{
         return (int) vertices.buscar(info);
     }
 
+    /**
+     * Este metodo agrega la tabla de probabilidades al vertice del grafoProbabilidad.
+     * @param probabilidades es la matriz que se toma como una tabla de probabilidad.
+     * @param variable es el nombre del vertice donde va a ir la tabla enviada.
+     * @return regresa true si se pudo agregar, en caso contrario, regresa false.
+     */
     public boolean setProbabilidad(Matriz2Numerica probabilidades, Object variable){
         int posicion = (int) vertices.buscar(variable);
         if (posicion == -1){
