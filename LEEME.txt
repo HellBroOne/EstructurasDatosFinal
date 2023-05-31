@@ -100,4 +100,3 @@ Para calcular la probabilidad conjunta del inciso E se hace uso del metodo calcu
         Hace los calculos y al final regresa el resultado imprimiendolo en la salida por defecto.
 
 
-

@@ -153,7 +153,7 @@ public class ListaEstatica implements VectorLista{
 
     @Override
     public boolean cambiar(int indice, Object info){
-        if ( !(informacion[indice]).equals(null) ){
+        if ( !(informacion[indice] == null) ){
             Object objetoEliminado = informacion[indice];
             informacion[indice] = info;
             return true;
