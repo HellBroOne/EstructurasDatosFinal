@@ -1,6 +1,7 @@
 package ModelosOcultosMarkov.prueba;
 
 import ModelosOcultosMarkov.codigo.ModeloOcultoMarkov;
+import ModelosOcultosMarkov.visual.InterfazUsuarioMOM;
 import entradasalida.SalidaPorDefecto;
 
 public class PruebaMOM {
@@ -31,5 +32,11 @@ public class PruebaMOM {
         SalidaPorDefecto.terminal("Probabilidad de la secuencia Tortilla, Nose, Lluvia: "+mom.probabilidadSecuenciaEstados("Tortilla, Nose, Lluvia")+"\n");
         SalidaPorDefecto.terminal("Probabilidad de la secuencia {vacia}: "+mom.probabilidadSecuenciaEstados(", ,")+"\n");
         SalidaPorDefecto.terminal("Probabilidad de la secuencia {vacia}: "+mom.probabilidadSecuenciaEstados("")+"\n");
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new InterfazUsuarioMOM().setVisible(true);
+            }
+        });
+
     }
 }
