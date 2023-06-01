@@ -321,6 +321,11 @@ public class ModeloOcultoMarkov {
         return colaDeSalida;
     }
 
+    /**
+     * Este metodo obtiene la probabilidad de secuencia del grafo.
+     * @param secuencia es un string de los estados que se va a calcular la probabilidad de secuencia.
+     * @return regresa la probabilidad calculada.
+     */
     public double probabilidadSecuenciaEstados(String secuencia){
         ColaDinamica estados = separadorDeCadenasEnCola(secuencia);
         if (estados.vacio() == false){
