@@ -1,11 +1,9 @@
 package ModelosOcultosMarkov.codigo;
 
 import entradasalida.SalidaPorDefecto;
-import estructurasLineales.ListaDinamica;
-import estructurasLineales.ListaDinamicaClave;
-import estructurasLineales.ListaEstatica;
-import estructurasLineales.ListaNumerica;
+import estructurasLineales.*;
 import estructurasnolineales.GrafoEstatico;
+import estructurasnolineales.Matriz2;
 
 /**
  * Clase que implementa un Modelo Oculto de Markov,
@@ -190,6 +188,9 @@ public class ModeloOcultoMarkov {
         imprimirTransiciones();
     }
 
+    /**
+     * Metodo que imprime las probabilidades iniciales.
+     */
     public void imprimirProbabilidadesIniciales(){
         for (int cadaDato = 0; cadaDato< probabilidadesIniciales.maximo(); cadaDato++){
             ListaEstatica listaobtenida = (ListaEstatica) estados.obtenerVertice(cadaDato);
@@ -197,6 +198,9 @@ public class ModeloOcultoMarkov {
         }
     }
 
+    /**
+     * Metodo que imprime los Estados del Modelo.
+     */
     public void imprimirEstados(){
         for (int cadaEstado = 0; cadaEstado<4; cadaEstado++){
             ListaEstatica listaObtenida = (ListaEstatica) estados.obtenerVertice(cadaEstado);
@@ -204,6 +208,9 @@ public class ModeloOcultoMarkov {
         }
     }
 
+    /**
+     * Metodo que imprime las probabilidades de Emision de los Estados.
+     */
     public void imprimirEmisionesEstados(){
         for (int cadaEstado = 0; cadaEstado<4; cadaEstado++){
             ListaEstatica listaObtenida = (ListaEstatica) estados.obtenerVertice(cadaEstado);
@@ -220,7 +227,124 @@ public class ModeloOcultoMarkov {
         }
     }
 
+    /**
+     * Metodo que imprime las transiciones de un estado a otro.
+     */
     public void imprimirTransiciones(){
         estados.obtenerAristas().imprimirPorRenglones();
+    }
+
+    public double probabilidadInicio(String estado){
+        ListaEstatica listaObtenida = buscarListaEstado(estado);
+        if (listaObtenida != null) {
+            int indiceEstado = estados.buscarIndice(listaObtenida);
+            if (indiceEstado != -1){
+                double resultado = (double) probabilidadesIniciales.obtener(indiceEstado);
+                return resultado;
+            } else {
+                return -1.0;
+            }
+        } else {
+            return -1.0;
+        }
+    }
+
+    private ListaEstatica buscarListaEstado(String estado){
+        for (int cadaEstado = 0; cadaEstado<4; cadaEstado++){
+            ListaEstatica listaObtenida = (ListaEstatica) estados.obtenerVertice(cadaEstado);
+            String estadoObtenido = (String) listaObtenida.obtener(0);
+            if (estado.equalsIgnoreCase(estadoObtenido) == true){
+                return listaObtenida;
+            }
+        }
+        return null;
+    }
+
+    public double probabilidadDeHacerActividad(String estadoActual, String actividad){
+        ListaEstatica listaObtenidaEstado = buscarListaEstado(estadoActual);
+        if (listaObtenidaEstado != null){
+            ListaDinamicaClave probabilidadesEmision = (ListaDinamicaClave) listaObtenidaEstado.obtener(1);
+            Double probabilidadResultado = (Double) probabilidadesEmision.obtener(actividad);
+            if (probabilidadResultado != null){
+                return probabilidadResultado;
+            }else{
+                return -1.0;
+            }
+        }else{
+            return -1.0;
+        }
+    }
+
+    /**
+     * Metodo que permite obtener una probabilidad de transicion del grafo.
+     * @param estadoOriginal Estado del grafo original (desde que estado se va a verificar).
+     * @param estadoTransicion Estado al cual se va a transitar o a cambiar.
+     * @return Regresa la probabilidad en double.
+     */
+    public double obtenerEstadoTransicion(String estadoOriginal, String estadoTransicion){
+        ListaEstatica listaOrigen = buscarListaEstado(estadoOriginal);
+        ListaEstatica listaTransicion = buscarListaEstado(estadoTransicion);
+        if ((listaTransicion != null)&&(listaOrigen != null)){ //si se encontro la lista de transicion actual
+            int indiceOrigen = estados.buscarIndice(listaOrigen);
+            int indiceDestino = estados.buscarIndice(listaTransicion);
+            Matriz2 copiaDeProbabilidades = estados.obtenerAristas();
+            return (double) copiaDeProbabilidades.obtener(indiceOrigen, indiceDestino);
+        } else {
+            return -1.0;
+        }
+    }
+
+    /**
+     * Metodo que, con una cadena separada por espacios o comas<br/>
+     * por palabra, es posible obtener una cola dinamica de esas<br/>
+     * palabras ya obtenidas.
+     * @param cadena Cadena a ingresar (debe tener comas por palabra).
+     * @return Regresa una cola con dichas palabras dentro.
+     */
+    public ColaDinamica separadorDeCadenasEnCola(String cadena){
+        String palabra = "";
+        ColaDinamica colaDeSalida = new ColaDinamica();
+        for (int cadaCaracter = 0; cadaCaracter<cadena.length(); cadaCaracter++){
+            char caracter = cadena.charAt(cadaCaracter);
+            if (caracter == ',' || caracter == ' '){
+                if (palabra.equals("") == false){
+                    colaDeSalida.poner(palabra);
+                    palabra = "";
+                }
+            } else {
+                palabra += caracter;
+            }
+        }
+        if (palabra.equals("") == false){
+            colaDeSalida.poner(palabra);
+        }
+        return colaDeSalida;
+    }
+
+    public double probabilidadSecuenciaEstados(String secuencia){
+        ColaDinamica estados = separadorDeCadenasEnCola(secuencia);
+        if (estados.vacio() == false){
+            String inicio = (String) estados.verInicio();
+            double probabilidadSalida = probabilidadInicio(inicio);
+            if (probabilidadSalida != -1.0){
+                while (estados.vacio() == false){
+                    String estadoInicial = (String) estados.quitar();
+                    if (estados.vacio() == false){
+                        String estadoFinal = (String) estados.verInicio();
+                        double probabilidadTransicion = obtenerEstadoTransicion(estadoInicial, estadoFinal);
+                        if (probabilidadTransicion != -1.0){ //si la probabilidad de dicho estado a ese existe
+                            probabilidadSalida = probabilidadSalida * probabilidadTransicion;
+                        } else { //si no finalizar el metodo
+                            return -1.0;
+                        }
+                    }
+                }
+                return probabilidadSalida;
+            } else {
+                return -1.0;
+            }
+        }else{
+            return -1.0;
+        }
     }
 }

@@ -356,7 +356,11 @@ public class ListaDinamicaClave {
      */
     public Object obtener(Object clave){
         NodoClave obtenido = obtenerNodoXClave(clave);
-        return obtenido.getInfo();
+        if (obtenido != null){
+            return obtenido.getInfo();
+        } else {
+            return null;
+        }
     }
 
     /**
