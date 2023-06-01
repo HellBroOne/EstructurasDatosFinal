@@ -26,7 +26,7 @@ public class PruebaMOM {
         SalidaPorDefecto.terminal("Probabilidad que el dia Seco cambie a Tormenta: "+mom.obtenerEstadoTransicion("Seco", "Tormenta")+"\n");
         SalidaPorDefecto.terminal("Probabilidad que el dia soleado cambie a huracan 3000 con probabilidades de caos y destruccion del mundo: "+mom.obtenerEstadoTransicion("Soleado", "Huracan 3000 con probabilidades de caos y destruccion del mundo")+"\n");
         SalidaPorDefecto.terminal("\n##### PROBABILIDADES DE SECUENCIA #####\n");
-        SalidaPorDefecto.terminal("Probabilidad de la secuencia LLuvia, Tormenta, Tormenta, Seco, Humedo: "+mom.probabilidadSecuenciaEstados("LLuvia, Tormenta, Tormenta, Seco, Humedo")+"\n");
+        SalidaPorDefecto.terminal("Probabilidad de la secuencia LLuvia, Tormenta, Tormenta, Seco, Humedo: "+mom.probabilidadSecuenciaEstados("LLuvia, Tormenta, Tormenta Seco Humedo")+"\n");
         SalidaPorDefecto.terminal("Probabilidad de la secuencia Humedo, Humedo: "+mom.probabilidadSecuenciaEstados("Humedo, Humedo")+"\n");
         SalidaPorDefecto.terminal("Probabilidad de la secuencia Tortilla, Nose, Lluvia: "+mom.probabilidadSecuenciaEstados("Tortilla, Nose, Lluvia")+"\n");
         SalidaPorDefecto.terminal("Probabilidad de la secuencia {vacia}: "+mom.probabilidadSecuenciaEstados(", ,")+"\n");
