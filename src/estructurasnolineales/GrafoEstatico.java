@@ -711,5 +711,28 @@ public class GrafoEstatico {
     public int buscarIndice(Object info){
         return (int) vertices.buscar(info);
     }
+
+    /**
+     * Metodo que permite simplmente cambiar la info de un vertice dado por su info.
+     * @param infoVieja Info Vieja
+     * @param infoNueva Info nueva a cambiar.
+     * @return Regresa true si se pudo cambiar, false si no.
+     */
+    public boolean cambiarInfoVertice(Object infoVieja, Object infoNueva){
+        int indiceVertice = (int) vertices.buscar(infoVieja);
+        if (indiceVertice == -1){
+            return false;
+        } else {
+            Vertice verticeObtenido = (Vertice) vertices.obtener(indiceVertice);
+            verticeObtenido.setInfo(infoNueva);
+            return true;
+        }
+    }
+
+
+    public Object obtenerVertice(int indice){
+        Vertice verticeObtenido = (Vertice) vertices.obtener(indice);
+        return verticeObtenido.getInfo();
+    }
 }
 

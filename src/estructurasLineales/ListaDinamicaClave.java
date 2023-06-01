@@ -477,4 +477,47 @@ public class ListaDinamicaClave {
         return nodoActual;
     }
 
+    /**
+     * Metodo que obtiene la cantidad de nodos en la lista.
+     * @return Regresa el valor de las cantidades.
+     */
+    public int cantidad() {
+        int total = 0;
+        if (primero != null){
+            NodoClave actual = primero;
+            while (actual != null){
+                total++;
+                actual = actual.getLigaDer();
+            }
+            return total;
+        }else{
+            return total;
+        }
+    }
+
+    /**
+     * Metodo que obtiene el elemento
+     * @param indice
+     * @return
+     */
+    public ListaEstatica obtenerClaveValor(int indice){
+        if ((indice > -1) && (indice < cantidad())){
+            int posicion = 0;
+            NodoClave actual = primero;
+            while (actual != null){
+                if (posicion == indice){
+                    ListaEstatica retorno = new ListaEstatica(2);
+                    retorno.agregar(actual.getClave());
+                    retorno.agregar(actual.getInfo());
+                    return retorno;
+                }
+                posicion++;
+                actual = actual.getLigaDer();
+            }
+            return null;
+        } else {
+            return null;
+        }
+    }
+
 }
