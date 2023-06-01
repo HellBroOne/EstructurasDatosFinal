@@ -1,102 +1,62 @@
-Evaluacion 3 - ED
+Trabajo Final - Estructuras de Datos 2023
+Fecha: 01/06/2023
 
-///////////////////// Equipo ////////////////////////////////
-Gerardo Rivas Delgado
-Andres Contreras Sanchez
+En este documento LEEME se explican unas breves ideas de lo que se va a
+describir.
 
-En este .txt se describira lo que se agrego
-como clases, clases de prueba y metodos así como los
-archivos de documentacion y algunas pequeñas
-consideraciones.
+####################### EQUIPO ####################################
+- Gerardo Rivas Delgado
+- Andrés Contreras Sánchez
 
 ####################### CLASES ####################################
+Tenemos 3 clases principales que son las siguientes:
+1. ModeloOcultoMarkov
+2. PruebaMOM
+3. InterfazUsuarioMOM
+Las definiremos a continuación.
 
-1. Clase de GrafoProbabilidad ---------------------------------
+1. Clase de ModeloOcultoMarkov ---------------------------------
 
-UBICADA EN = src/estructurasnolineales/GrafoProbabilidad.java
+UBICADA EN= src/ModelosOcultosMarkov/codigo/ModeloOcultoMarkov.java
 
-DESCRIPCION = Clase que permite realizar la estructura de un grafo de probabilidad.
+DESCRIPCION= Clase que en su interior contiene al ejemplo que se tenia en el pdf propuesto, 
+la idea es que con este ejemplo podamos obtener las probabilidades que se requieren para poder
+realizar las preguntas de los incisos desde los métodos.
 
-METODOS = Tenemos varios metodos que nos permiten checar lo siguiente:
-        - agregarVertice() - Este metodo agrega un verticeProbabilidad en el grafoProbabilidad.
-        - agregarArista() - Este metodo agrega una arista en el grafo probabilidad utilizando como
-                            argumento el verticeProbabilidad origen y el verticeProbabilidad destino.
-        - buscarIndice() - Busca simplemente el indice de una info.
-        - setProbabilidad() -Este metodo agrega la tabla de probabilidades al vertice del grafoProbabilidad.
+METODOS= Tenemos varios métodos, son muchos pero otros simplemente son ocultos para poder
+obtener y construir la información del ejemplo propuesto.
+Como son muchos, sólo explicaré los usamos para responder preguntas:
+  - probabilidadInicio(String estado): Metodo que permite obtener la probabilidad de que un estado inicie.
+  - probabilidadDeHacerActividad(String estadoActual, String actividad): Metodo que permite obtener la
+    probabilidad de hacer una actividad.
+  - obtenerEstadoTransicion(String estadoOriginal, String estadoTransicion): Este metodo permite obtener una
+    probabilidad de transición de un estado a otro.
+  - probabilidadSecuenciaEstados(String secuencia): Dada una secuencia de estados, se permite
+    calcular la probabilidad conjunta de dichos estados.
+  - imprimirModelo(): Metodo que imprime el modelo de Markov en consola.
 
-2. Clase RedBayesiana --------------------
+2. Clase de Prueba: PruebaMOM --------------------------
+UBICADA EN= src/ModelosOcultosMarkov/prueba/PruebaMOM.java
+DESCRIPCIÓN= Esta clase es la clase que se uso para realizar pruebas respecto
+al MOM, de hecho, desde aquí se puede iniciar el programa.
+Aunque en dicha clase se mantuvieron las líneas de la prueba para la revisión.
 
-   UBICADA EN = src/RedesBayesianas/RedBayesiana.java
-
-   DESCRIPCION =  Esta clase es la cual simula a la red de Bayes, el punto de esta clase es la de contener
-                  al grafo de probabilidad y poder hacer las operaciones de guardar dichas probabilidades
-                  en el mismo.
-
-   METODOS = Tenemos 8 metodos principales, pero que mandan a llamar a otros que
-             son privados para obtener ciertos datos, estos son:
-
-               - agregarVariable(info): Agrega una variable a la red de Bayes.
-               - agregarArista(origen, destino): Permite agregar una conexion entre dos variables.
-               - agregarProbabilidades(variable): Dada una variable, es permitido buscarla y obtener su
-                                                  tabla de probabilidades, para poder editar los valores
-                                                  dentro de ella.
-               - obtenerPadres(variable) [PRIVADO]: Metodo que dada una variable, se obtienen sus padres.
-               - calcularProbabilidad(variable): Dada una variable de entrada, es posible obtener la probabilidad
-                                                 de esta variable, preguntando por ciertos eventos de los padres.
-               - buscarProbabilidad(variable): De una variable o vertice se puede obtener la tabla de
-                                               probabilidad en tipo Matriz2
-               - contarPadres(variable): Simplemente cuenta cuantos padres tiene un vertice.
-               - imprimir(): solo imprime el grafo. Este metodo casi solo fue para pruebas.
-               - calcularProbabilidadConjunta(): Este metodo calcula la probabilidad conjunta dada la cantidad de variables
-                                                 seleccionada por el usuario, y las variables seleccionadas por el mismo.
-
-3. Clase VerticeProbabilidad --------------------
-
-   UBICADA EN = src/estructurasnolineales/auxiliares/VerticeProbabilidad.java
-
-   DESCRIPCION =  Esta clase es para generar los vertices del grafo de probabilidad,
-                  la diferencia de esta clase VerticeProbabilidad a la de Vertice es que
-                  ademas de solo almacenar el indice y la info, el VerticeProbabilidad tambien
-                  almacena una Matriz2Numerica que estamos usando como tabla de probabilidades
-                  para ser usado y llenado con las probabilidades.
-
-   METODOS = Tenemos varios metodos, estos son los getters y setters de los atributos
-             indice, info y probabilidad.
-
-4. Clase de Prueba: PruebaRedBayesiana --------------------------
-
-    UBICADA EN = src/pruebas/PruebaRedBayesiana.java
-
-    DESCRIPCIÓN = Esta clase es la clase que se uso para realizar pruebas respecto
-                  a el uso de una Red Bayesiana.
-
-
+3. Clase de GUI: InterfazUsuarioMOM --------------------------
+UBICADA EN= src/ModelosOcultosMarkov/visual/InterfazUsuarioMOM.java
+DESCRIPCION= Esta clase es la clase que maneja la interfaz y usa los métodos del MOM
+para poder realizarse en el programa, no contiene métodos más que métodos de control
+de eventos.
 
 ############## TODA LA DOCUMENTACIÓN ESTÁ EN LAS RUTAS SIGUIENTES ##############
 
-1. 1. Clase GrafoProbabilidad: doc/estructurasnolineales/GrafoProbabilidad.html
+1. Clase de ModeloOcultoMarkov: doc/ModelosOcultosMarkov/codigo/ModeloOcultoMarkov.html
 
-   2. Clase RedBayesiana: doc/RedesBayesianas/RedBayesiana.html.
+2. Clase de Prueba PruebaMOM: doc/ModelosOcultosMarkov/prueba/PruebaMOM.html
 
-   3. Clase VerticeProbabilidad: doc/estructurasnolineales/auxiliares/VerticeProbabilidad.html
-
-   4. Clase PruebaRedBayesiana no conlleva ningún JavaDoc en sí, ya que es un simple "main".
-
+3. Clase de GUI InterfazUsuarioMOM: doc/ModelosOcultosMarkov/visual/InterfazUsuarioMOM.html
 
 #################### CONSIDERACIONES DEL TRABAJO ##############################
-El ejercicio propuesto viene EJERCICIOPROPUESTO_GERARDO_ANDRES.jpg donde viene el vertice con 2 padres.
+En la interfaz se dan las instrucciones de ejemplos de como llenar los campos, igual
+los métodos no se complican mucho y usan parámetros de cadenas para los métodos.
 
-Los vertices se ponen en la prueba
-Las aristas se ponen en la prueba
-Los valores de la tabla probabilidad son ingresadas con el metodo agregarProbabilidades()
-    ejemplo =  red.agregarProbabilidades("repruebo");
-Para obtener las probabilidad del inciso D se hace uso del metodo calcularProbabilidad(nombre vertice).
-    ejemplo = red.calcularProbabilidad("Se va la Luz");
-Para calcular la probabilidad conjunta del inciso E se hace uso del metodo calcularProbabilidadConjunta().
-    ejemplo = red.calcularProbabilidadConjunta().
-        Aqui se va a preguntar la cantidad de variables a calcular
-        Despues pregunta el nombre y si sucede o no, para encontrar la cantidad de probabilidad, esto lo hace las veces
-        ingresadas en el paso anterior.
-        Hace los calculos y al final regresa el resultado imprimiendolo en la salida por defecto.
-
-
+Estuvo bonito el trabajo, un saludo.

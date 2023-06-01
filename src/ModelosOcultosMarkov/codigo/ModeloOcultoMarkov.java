@@ -234,6 +234,11 @@ public class ModeloOcultoMarkov {
         estados.obtenerAristas().imprimirPorRenglones();
     }
 
+    /**
+     * Metodo que permite obtener una probabilidad de Inicio.
+     * @param estado Estado a buscar.
+     * @return Regresa la probabilidad de inicio.
+     */
     public double probabilidadInicio(String estado){
         ListaEstatica listaObtenida = buscarListaEstado(estado);
         if (listaObtenida != null) {
@@ -249,6 +254,11 @@ public class ModeloOcultoMarkov {
         }
     }
 
+    /**
+     * Metodo que busca una lista de un estado.
+     * @param estado Estado a buscar
+     * @return Regresa la Lista Estatica de dicho estado.
+     */
     private ListaEstatica buscarListaEstado(String estado){
         for (int cadaEstado = 0; cadaEstado<4; cadaEstado++){
             ListaEstatica listaObtenida = (ListaEstatica) estados.obtenerVertice(cadaEstado);
@@ -260,6 +270,12 @@ public class ModeloOcultoMarkov {
         return null;
     }
 
+    /**
+     * Metodo que permite obtener la probabilidad de que se haga una actividad segun el estado actual.
+     * @param estadoActual Estado actual.
+     * @param actividad Actividad a realizar.
+     * @return Regresa una probabilidad especifica de cierta actividad.
+     */
     public double probabilidadDeHacerActividad(String estadoActual, String actividad){
         ListaEstatica listaObtenidaEstado = buscarListaEstado(estadoActual);
         if (listaObtenidaEstado != null){
